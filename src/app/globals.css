@@ -1,0 +1,563 @@
+@import "tailwindcss";
+
+/* ─── Golden Ratio Clinics — Design Tokens ─── */
+
+:root {
+  /* Golden ratio scale: each step × 1.618 */
+  --ratio: 1.618;
+
+  /* Colour palette: Sage + Warm Neutrals */
+  --sage-50: #f6f7f4;
+  --sage-100: #e8ebe3;
+  --sage-200: #d1d8c7;
+  --sage-300: #b3bfa3;
+  --sage-400: #93a37e;
+  --sage-500: #768a60;
+  --sage-600: #5c6e4b;
+  --sage-700: #48573c;
+  --sage-800: #3b4633;
+  --sage-900: #333b2d;
+  --sage-950: #1a1f16;
+
+  --cream-50: #fdfcf9;
+  --cream-100: #f9f6ef;
+  --cream-200: #f2eddf;
+  --cream-300: #e8dfc9;
+  --cream-400: #d9ccab;
+  --cream-500: #c9b78e;
+
+  --gold-400: #c4a44a;
+  --gold-500: #b08d35;
+  --gold-600: #977428;
+
+  --warm-50: #faf9f7;
+  --warm-100: #f3f1ec;
+  --warm-200: #e6e2d9;
+  --warm-300: #d5cec0;
+  --warm-400: #bfb5a1;
+  --warm-500: #a89a82;
+
+  --text-primary: #2d3129;
+  --text-secondary: #5a6153;
+  --text-muted: #8a917f;
+  --text-on-dark: #f6f7f4;
+
+  --background: #fdfcf9;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --border: #e8ebe3;
+  --border-subtle: #f2eddf;
+
+  /* Semantic */
+  --accent: var(--sage-600);
+  --accent-light: var(--sage-100);
+  --accent-hover: var(--sage-700);
+  --cta: var(--gold-500);
+  --cta-hover: var(--gold-600);
+
+  /* Typography scale (golden ratio) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.618rem;
+  --text-3xl: 2.058rem;
+  --text-4xl: 2.618rem;
+  --text-5xl: 3.33rem;
+  --text-6xl: 4.236rem;
+
+  /* Spacing scale */
+  --space-xs: 0.382rem;
+  --space-sm: 0.618rem;
+  --space-md: 1rem;
+  --space-lg: 1.618rem;
+  --space-xl: 2.618rem;
+  --space-2xl: 4.236rem;
+  --space-3xl: 6.854rem;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.618rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.618rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(45, 49, 41, 0.04);
+  --shadow-md: 0 4px 12px rgba(45, 49, 41, 0.06);
+  --shadow-lg: 0 8px 30px rgba(45, 49, 41, 0.08);
+  --shadow-xl: 0 20px 60px rgba(45, 49, 41, 0.1);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ─── Patient Portal — Clinical Theme (LIGHT default) ───
+     These are consumed only by pages under /portal/* via the
+     data-theme attribute on <html>. They do NOT affect the
+     marketing variations in /v/*.
+  */
+  --portal-bg: #FBFAF7;
+  --portal-surface: #FFFFFF;
+  --portal-surface-2: #F4F1EA;
+  --portal-surface-elev: #FFFFFF;
+  --portal-border: #E5DFD0;
+  --portal-border-strong: #D4CDB4;
+  --portal-text: #1B1F24;
+  --portal-text-muted: #6B7280;
+  --portal-text-subtle: #9CA3AF;
+  --portal-accent: #3D8764;
+  --portal-accent-soft: rgba(61, 135, 100, 0.1);
+  --portal-danger: #B91C1C;
+  --portal-danger-soft: rgba(185, 28, 28, 0.08);
+  --portal-warning: #B45309;
+  --portal-warning-soft: rgba(180, 83, 9, 0.1);
+  --portal-info: #1E40AF;
+  --portal-info-soft: rgba(30, 64, 175, 0.08);
+  --portal-highlight: #E5B94E;
+  --portal-shadow: 0 1px 3px rgba(27, 31, 36, 0.04), 0 4px 12px rgba(27, 31, 36, 0.04);
+  /* Translucent surface for sticky/floating chrome (admin header,
+     dropdowns, modals). Matches --portal-surface at 85% opacity so
+     backdrop-blur produces a frosted-glass effect. */
+  --portal-surface-translucent: rgba(255, 255, 255, 0.85);
+}
+
+/* Dark theme — applied via [data-theme="dark"] set on <html> by the
+   portal theme provider. The selector has the same specificity as
+   :root, so last-defined wins when data-theme is "dark". */
+html[data-theme="dark"] {
+  --portal-bg: #0B0F14;
+  --portal-surface: #131A22;
+  --portal-surface-2: #1A222C;
+  --portal-surface-elev: #1F2833;
+  --portal-border: #2A3441;
+  --portal-border-strong: #3A4654;
+  --portal-text: #F3F4F6;
+  --portal-text-muted: #9CA3AF;
+  --portal-text-subtle: #6B7280;
+  --portal-accent: #7BC79A;
+  --portal-accent-soft: rgba(123, 199, 154, 0.12);
+  --portal-danger: #FCA5A5;
+  --portal-danger-soft: rgba(252, 165, 165, 0.1);
+  --portal-warning: #FCD34D;
+  --portal-warning-soft: rgba(252, 211, 77, 0.1);
+  --portal-info: #93C5FD;
+  --portal-info-soft: rgba(147, 197, 253, 0.1);
+  --portal-highlight: #FDE68A;
+  --portal-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+  --portal-surface-translucent: rgba(19, 26, 34, 0.85);
+}
+
+@theme inline {
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
+  --color-sage-400: var(--sage-400);
+  --color-sage-500: var(--sage-500);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+  --color-sage-800: var(--sage-800);
+  --color-sage-900: var(--sage-900);
+  --color-sage-950: var(--sage-950);
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-cream-400: var(--cream-400);
+  --color-cream-500: var(--cream-500);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-warm-50: var(--warm-50);
+  --color-warm-100: var(--warm-100);
+  --color-warm-200: var(--warm-200);
+  --color-warm-300: var(--warm-300);
+  --color-warm-400: var(--warm-400);
+  --color-warm-500: var(--warm-500);
+  --font-sans: var(--font-display);
+  --font-body: var(--font-body-text);
+}
+
+/* ─── Base ─── */
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-body-text), system-ui, -apple-system, sans-serif;
+  line-height: var(--ratio);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  /* color is intentionally not set here — each variation's heading
+     color is controlled by Tailwind utility classes or inline styles.
+     Setting it globally breaks dark-hero variations. */
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: var(--sage-200);
+  color: var(--sage-900);
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sage-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sage-400);
+}
+
+/* ─── Focus styles ─── */
+
+:focus-visible {
+  outline: 2px solid var(--sage-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Utility animations ─── */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s var(--ease-out) both;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s var(--ease-out) both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s var(--ease-out) both;
+}
+
+/* ─── Quiet Hours — Apothecary Editorial typographic utilities ───
+   Restraint over ornament. Type does the decorative work.
+   Used exclusively on the Quiet Hours funnel page. */
+
+/* Small-caps editorial eyebrow — replaces loud uppercase labels.
+   Playfair italic, tight small caps, generous tracking, charcoal ink. */
+.qh-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #2A2822;
+  font-variant-caps: all-small-caps;
+}
+
+.qh-eyebrow::before,
+.qh-eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+/* Drop cap — oversized first-letter treatment for editorial paragraphs.
+   Playfair, four lines tall, proper baseline hang. */
+.qh-dropcap::first-letter {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-style: normal;
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.82;
+  padding-right: 0.1em;
+  padding-top: 0.08em;
+  margin-right: 0.04em;
+  color: #A85C6B;
+}
+
+/* Hairline rule — thin 1px horizontal editorial divider */
+.qh-rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #2A2822;
+  opacity: 0.2;
+  border: 0;
+}
+
+/* Asterism divider — centered ⁂ flanked by hairlines */
+.qh-asterism {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  color: #A85C6B;
+  font-family: var(--font-display), serif;
+  font-size: 1.1rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.qh-asterism::before,
+.qh-asterism::after {
+  content: "";
+  flex: 1;
+  max-width: 5.5rem;
+  height: 1px;
+  background: #2A2822;
+  opacity: 0.25;
+}
+
+/* Editorial numeral — Playfair italic small caps for №-style indices */
+.qh-numeral {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.04em;
+  color: #A85C6B;
+}
+
+/* Emphasis underline — single 1px ink-rose rule beneath italic <em>.
+   Restrained. No animation. Just a considered line. */
+.qh-emph {
+  position: relative;
+  display: inline-block;
+}
+
+.qh-emph::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 1px;
+  background: #A85C6B;
+  opacity: 0.75;
+}
+
+/* ─── Stagger delays ─── */
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+
+/* ─── Glass morphism ─── */
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-sage {
+  background: rgba(232, 235, 227, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(232, 235, 227, 0.3);
+}
+
+/* ─── Gradient overlays ─── */
+
+.gradient-sage {
+  background: linear-gradient(135deg, var(--sage-50) 0%, var(--cream-100) 50%, var(--sage-100) 100%);
+}
+
+.gradient-hero {
+  background: linear-gradient(180deg, var(--cream-50) 0%, var(--sage-50) 40%, var(--cream-100) 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-400) 100%);
+}
+
+/* ─── Section patterns ─── */
+
+.pattern-dots {
+  background-image: radial-gradient(circle, var(--sage-200) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Button styles ─── */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--sage-700);
+  color: white;
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: pointer;
+  border: none;
+  font-size: var(--text-base);
+  line-height: 1;
+}
+
+.btn-primary:hover {
+  background: var(--sage-800);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--sage-700);
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--sage-300);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: pointer;
+  font-size: var(--text-base);
+  line-height: 1;
+}
+
+.btn-secondary:hover {
+  background: var(--sage-50);
+  border-color: var(--sage-400);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-400) 100%);
+  color: white;
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: pointer;
+  border: none;
+  font-size: var(--text-base);
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(176, 141, 53, 0.3);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(176, 141, 53, 0.4);
+}
+
+/* ─── Card styles ─── */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--sage-200);
+}
+
+.card-elevated {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.card-elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
+}
+
+/* ─── Input styles ─── */
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--sage-400);
+  box-shadow: 0 0 0 3px rgba(92, 110, 75, 0.1);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
